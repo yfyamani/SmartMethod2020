@@ -1,0 +1,94 @@
+#include <Servo.h>
+
+Servo servo1;  // create servo object to control a servo
+Servo servo2;
+
+int angle1 =0;    // initial angle  for servo
+int angle2 =0;    // initial angle  for servo
+int angleStep =5;
+
+#define LEFT1 12   // pin 12 is connected to left button
+#define RIGHT1 2  // pin 2 is connected to right button
+#define LEFT2 7   // pin 12 is connected to left button
+#define RIGHT2 4  // pin 2 is connected to right button
+
+void setup() {
+  Serial.begin(9600);          //  setup serial
+  servo1.attach(9);  // attaches the servo on pin 9 to the servo object
+  servo2.attach(10);
+  pinMode(LEFT1,INPUT_PULLUP); // assign pin 12 ass input for Left button
+  pinMode(RIGHT1,INPUT_PULLUP);// assing pin 2 as input for right button
+  pinMode(LEFT2,INPUT_PULLUP); // assign pin 7 ass input for Left button
+  pinMode(RIGHT2,INPUT_PULLUP);// assing pin 4 as input for right button
+  servo1.write(angle1);// send servo to the middle at 90 degrees
+  servo2.write(angle2);// send servo to the middle at 90 degrees
+ Serial.println("Robojax Servo Button ");
+}
+
+void loop() {
+  while(digitalRead(RIGHT1) == LOW){
+    
+    if (angle1 > 0 && angle1 <= 180) {
+      angle1 = angle1 - angleStep;
+       if(angle1 < 0){
+        angle1 = 0;
+       }else{
+      servo1.write(angle1); // move the servo to desired angle
+      Serial.print("Moved to: ");
+      Serial.print(angle1);   // print the angle
+      Serial.println(" degree");
+       }
+    }
+    
+  delay(100); // waits for the servo to get there
+  }
+
+  while(digitalRead(LEFT1) == LOW){
+
+    if (angle1 >= 0 && angle1 <= 180) {
+      angle1 = angle1 + angleStep;
+      if(angle1 >180){
+        angle1 =180;
+       }else{
+      servo1.write(angle1); // move the servo to desired angle
+      Serial.print("Moved to: ");
+      Serial.print(angle1);   // print the angle
+      Serial.println(" degree");
+       }
+    }    
+  delay(100); // waits for the servo to get there  
+  }
+  while(digitalRead(RIGHT2) == LOW){
+
+    if (angle2 > 0 && angle2 <= 180) {
+      angle2 = angle2 - angleStep;
+       if(angle2 < 0){
+        angle2 = 0;
+       }else{
+      servo2.write(angle2); // move the servo to desired angle
+      Serial.print("Moved to: ");
+      Serial.print(angle2);   // print the angle
+      Serial.println(" degree");
+       }
+    }
+    
+  delay(100); // waits for the servo to get there
+  }
+
+  while(digitalRead(LEFT2) == LOW){
+
+
+    if (angle2 >= 0 && angle2 <= 180) {
+      angle2 = angle2 + angleStep;
+      if(angle2 >180){
+        angle2 =180;
+       }else{
+      servo2.write(angle2); // move the servo to desired angle
+      Serial.print("Moved to: ");
+      Serial.print(angle2);   // print the angle
+      Serial.println(" degree");
+       }
+    }    
+  delay(100); // waits for the servo to get there    
+  }
+}
